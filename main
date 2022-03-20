@@ -1,0 +1,46 @@
+erraform {
+  backend "s3" {
+    bucket = "mli-terraform"
+    key    = "%NAME%-%ENV%-db.tfstate"
+    region = "ap-south-1"
+  }
+}
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+variable "project" {
+  type = map(string)
+  default = {
+    name : "%NAME%",
+  }
+}
+
+variable "aws" {
+  type = map(string)
+  default = {
+    vpc_id : "vpc-082b8ca032705fce7",
+    account_id : "423085655527"
+    region : "ap-south-1"
+  }
+}
+
+
+variable "default_tags" {
+  type = map(string)
+  default = {
+    project : "%NAME%",
+    subproject : "%NAME%",
+    env : "nonprod",
+    subenv : "%ENV%"
+  }
+}
+
+variable "postgres" {
+  type = map(string)
+  default = {
+    username : "payment",
+    password : "payment123"
+  }
+}
